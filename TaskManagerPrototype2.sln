@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerPrototype2", "TaskManagerPrototype2\TaskManagerPrototype2.csproj", "{30D2DE18-F310-4F2F-B397-B5112077D6A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerPrototype2.Application", "TaskManagerPrototype2.Application\TaskManagerPrototype2.Application.csproj", "{1915918D-E72E-42F6-ADCA-0084396A3F98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{30D2DE18-F310-4F2F-B397-B5112077D6A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30D2DE18-F310-4F2F-B397-B5112077D6A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30D2DE18-F310-4F2F-B397-B5112077D6A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1915918D-E72E-42F6-ADCA-0084396A3F98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1915918D-E72E-42F6-ADCA-0084396A3F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1915918D-E72E-42F6-ADCA-0084396A3F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1915918D-E72E-42F6-ADCA-0084396A3F98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
