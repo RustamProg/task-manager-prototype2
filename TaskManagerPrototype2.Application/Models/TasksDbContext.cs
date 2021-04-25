@@ -11,7 +11,6 @@ namespace TaskManagerPrototype2.Application.Models
         }
         
         public DbSet<Task> Tasks { get; set; }
-        public DbSet<User> Users { get; set; }
-        
+
     }
 }
