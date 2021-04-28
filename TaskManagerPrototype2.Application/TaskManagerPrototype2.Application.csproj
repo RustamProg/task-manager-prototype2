@@ -17,9 +17,4 @@
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.2" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Services\Abstractions" />
-      <Folder Include="Services\Repositories\Abstractions" />
-    </ItemGroup>
-
 </Project>

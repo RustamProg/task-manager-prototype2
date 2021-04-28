@@ -16,6 +16,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using TaskManagerPrototype2.Application.Models;
+using TaskManagerPrototype2.Application.Services;
+using TaskManagerPrototype2.Application.Services.Abstractions;
 
 namespace TaskManagerPrototype2.Application
 {
@@ -78,6 +80,8 @@ namespace TaskManagerPrototype2.Application
                     }
                 });
             });
+
+            services.AddScoped(typeof(ITaskService), typeof(TaskService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
