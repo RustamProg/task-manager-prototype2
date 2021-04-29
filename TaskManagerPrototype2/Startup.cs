@@ -86,10 +86,12 @@ namespace TaskManagerPrototype2
                     }
                 });
             });
+            
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddScoped(typeof(IUserService), typeof(UserService));
-            services.AddScoped(typeof(IDbRepository), typeof(DbRepository));
             
-            
+            services.AddScoped(typeof(ITasksRepository), typeof(TasksRepository));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

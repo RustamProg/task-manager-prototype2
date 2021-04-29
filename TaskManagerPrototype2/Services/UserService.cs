@@ -11,10 +11,10 @@ namespace TaskManagerPrototype2.Services
 {
     public class UserService: IUserService
     {
-        private readonly IDbRepository _dbRepository;
+        private readonly IUserRepository _dbRepository;
         private readonly IConfiguration _configuration;
 
-        public UserService(IDbRepository repository, IConfiguration configuration)
+        public UserService(IUserRepository repository, IConfiguration configuration)
         {
             _dbRepository = repository;
             _configuration = configuration;

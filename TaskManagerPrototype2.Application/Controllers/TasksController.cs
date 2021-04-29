@@ -15,16 +15,19 @@ namespace TaskManagerPrototype2.Application.Controllers
     {
 
         private readonly ITaskService _taskService;
-        public TasksController(ITaskService taskService)
+        private readonly IUserService _userService;
+        public TasksController(ITaskService taskService, IUserService userService)
         {
             _taskService = taskService;
+            _userService = userService;
         }
 
         [Authorize]
         [HttpPost("create-task")]
         public IActionResult CreateTask(TaskForm taskForm)
         {
-            _taskService.CreateTask(taskForm, User.FindFirstValue("username"));
+            var user = _userService.GetUserById(int.Parse(User.FindFirstValue("id")));
+            _taskService.CreateTask(taskForm, user);
             return Ok();
         }
         

@@ -16,13 +16,14 @@ namespace TaskManagerPrototype2.Application.Services
             _context = context;
         }
         
-        public void CreateTask(TaskForm taskForm, string username)
+        public void CreateTask(TaskForm taskForm, User user)
         {
             var task = new Task()
             {
                 Title = taskForm.Title,
-                TextBody = taskForm.TextBody + " (Created by " + username + ")",
-                Create_date = taskForm.Create_date
+                TextBody = taskForm.TextBody + " (Created by " + user.Username + ")",
+                Create_date = taskForm.Create_date,
+                Author = user
             };
 
             _context.Tasks.Add(task);

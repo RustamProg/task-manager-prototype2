@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerPrototype2.Application.Models.ModelEntities;
 
@@ -11,6 +12,7 @@ namespace TaskManagerPrototype2.Application.Models
         }
         
         public DbSet<Task> Tasks { get; set; }
-
+        
+        public DbSet<User> Users { get; set; }
     }
 }

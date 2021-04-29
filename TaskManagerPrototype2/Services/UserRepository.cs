@@ -7,11 +7,11 @@ using TaskManagerPrototype2.Models.Entites;
 
 namespace TaskManagerPrototype2.Services
 {
-    public class DbRepository: IDbRepository
+    public class UserRepository: IUserRepository
     {
         private readonly TasksDBContext _context;
 
-        public DbRepository(TasksDBContext context)
+        public UserRepository(TasksDBContext context)
         {
             _context = context;
         }

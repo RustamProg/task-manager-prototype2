@@ -6,7 +6,7 @@ namespace TaskManagerPrototype2.Application.Services.Abstractions
 {
     public interface ITaskService
     {
-        void CreateTask(TaskForm taskForm, string username);
+        void CreateTask(TaskForm taskForm, User user);
         List<Task> GetAllTasks();
         List<Task> GetAllUserTasks(UserInfo userInfo);
         void DeleteTask(TaskForm taskForm);

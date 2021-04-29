@@ -4,7 +4,7 @@ using TaskManagerPrototype2.Models.Entites;
 
 namespace TaskManagerPrototype2.Services
 {
-    public interface IDbRepository
+    public interface IUserRepository
     {
         List<User> GetAll();
         User GetById(int id);
