@@ -91,6 +91,7 @@ namespace TaskManagerPrototype2
             services.AddScoped(typeof(IUserService), typeof(UserService));
             
             services.AddScoped(typeof(ITasksRepository), typeof(TasksRepository));
+            services.AddScoped(typeof(ITasksService), typeof(TasksService));
 
         }
 
