@@ -43,38 +43,5 @@ namespace TaskManagerPrototype2.Services
             return _context.TaskComments.Include(x => x.Author).Where(x => x.TaskNote.Id == taskNote.Id).ToList();
         }
 
-        public Project GetProjectById(int projectId)
-        {
-            return _context.Projects.Include(x => x.Manager).FirstOrDefault(x => x.Id == projectId);
-        }
-
-        public TaskNote GetTaskById(int taskNoteId)
-        {
-            return _context.TaskNotes.Include(x => x.Author).Include(x => x.ProjectRef)
-                .FirstOrDefault(x => x.Id == taskNoteId);
-        }
-
-        public TaskComment GetTaskCommentById(int taskCommentId)
-        {
-            return _context.TaskComments.Include(x => x.Author).FirstOrDefault(x => x.Id == taskCommentId);
-        }
-
-        public async Task AddNewProject(Project project)
-        {
-            await _context.AddAsync(project);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task AddNewTaskNote(TaskNote taskNote)
-        {
-            await _context.AddAsync(taskNote);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task AddNewTaskComment(TaskComment taskComment)
-        {
-            await _context.AddAsync(taskComment);
-            await _context.SaveChangesAsync();
-        }
     }
 }

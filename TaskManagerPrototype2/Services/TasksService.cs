@@ -9,25 +9,31 @@ namespace TaskManagerPrototype2.Services
     public class TasksService: ITasksService
     {
         private readonly ITasksRepository _tasksRepository;
+        private readonly IUserService _userService;
+        private readonly IDbRepository _dbRepository;
+        private readonly ICurrentUser _currentUser;
 
-        public TasksService(ITasksRepository tasksRepository)
+        public TasksService(ITasksRepository tasksRepository, IUserService userService, IDbRepository dbRepository, ICurrentUser currentUser)
         {
             _tasksRepository = tasksRepository;
+            _userService = userService;
+            _dbRepository = dbRepository;
+            _currentUser = currentUser;
         }
 
-        public List<Project> GetAllUserProjects(int userId)
+        public List<Project> GetAllUserProjects()
         {
-            return _tasksRepository.GetAllUserProjects(userId);
+            return _tasksRepository.GetAllUserProjects(_currentUser.Id);
         }
 
-        public List<TaskNote> GetAllUserTasks(int userId)
+        public List<TaskNote> GetAllUserTasks()
         {
-            return _tasksRepository.GetAllUserTasks(userId);
+            return _tasksRepository.GetAllUserTasks(_currentUser.Id);
         }
 
-        public List<TaskComment> GetAllUserTaskComments(int userId)
+        public List<TaskComment> GetAllUserTaskComments()
         {
-            return _tasksRepository.GetAllUserTaskComments(userId);
+            return _tasksRepository.GetAllUserTaskComments(_currentUser.Id);
         }
 
         public List<TaskNote> GetAllTasksByProject(int projectId)
@@ -52,60 +58,64 @@ namespace TaskManagerPrototype2.Services
 
         public Project GetProjectById(int projectId)
         {
-            return _tasksRepository.GetProjectById(projectId);
+            return _dbRepository.GetById<Project>(projectId);
         }
 
         public TaskNote GetTaskById(int taskNoteId)
         {
-            return _tasksRepository.GetTaskById(taskNoteId);
+            return _dbRepository.GetById<TaskNote>(taskNoteId);
         }
 
         public TaskComment GetTaskCommentById(int taskCommentId)
         {
-            return _tasksRepository.GetTaskCommentById(taskCommentId);
+            return _dbRepository.GetById<TaskComment>(taskCommentId);
         }
 
-        public async Task AddNewProject(ProjectForm projectForm, int userId)
+        public async Task AddNewProject(ProjectForm projectForm)
         {
-            var project = new Project()
+            // todo: Use mappers
+            var project = new Project
             {
                 Title = projectForm.Title,
                 Description = projectForm.Description,
                 CreateDateTime = DateTime.Now,
                 TargetDateTime = DateTime.Now,
-                Manager = new User(){Id = userId}
+                ManagerId = _currentUser.Id
             };
-            
 
-            await _tasksRepository.AddNewProject(project);
+
+            await _dbRepository.Add(project);
         }
 
-        public async Task AddNewTaskNote(TaskNoteForm taskNoteForm, int userId)
+        public async Task AddNewTaskNote(TaskNoteForm taskNoteForm)
         {
-            var taskNote = new TaskNote()
+            var projectRef = _dbRepository.GetById<Project>(taskNoteForm.ProjectRefId);
+            var author = _userService.GetById(_currentUser.Id);
+            
+            var taskNote = new TaskNote
             {
                 Title = taskNoteForm.Title,
                 TextBody = taskNoteForm.TextBody,
-                CreateDateTime = DateTime.Now,
-                TargetDateTime = DateTime.Now,
-                ProjectRef = new Project() {Id = taskNoteForm.ProjectRefId},
-                Author = new User() {Id = userId}
+                ProjectRef = projectRef,
+                Author = author
             };
 
-            await _tasksRepository.AddNewTaskNote(taskNote);
+            await _dbRepository.Add(taskNote);
         }
 
-        public async Task AddNewTaskComment(TaskCommentForm taskCommentForm, int userId)
+        public async Task AddNewTaskComment(TaskCommentForm taskCommentForm)
         {
-            var taskComment = new TaskComment()
+            var author = _userService.GetById(_currentUser.Id);
+            var taskNote = _dbRepository.GetById<TaskNote>(taskCommentForm.TaskNoteId);
+            var taskComment = new TaskComment
             {
                 TextBody = taskCommentForm.TextBody,
-                TaskNote = new TaskNote() {Id = taskCommentForm.TaskNoteId},
-                Author = new User() {Id = userId},
+                TaskNote = taskNote,
+                Author = author,
                 CreateDateTime = DateTime.Now
             };
 
-            await _tasksRepository.AddNewTaskComment(taskComment);
+            await _dbRepository.Add(taskComment);
         }
     }
 }

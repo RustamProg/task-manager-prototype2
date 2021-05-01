@@ -2,12 +2,11 @@ using System;
 
 namespace TaskManagerPrototype2.Models.Entites
 {
-    public class TaskComment
+    public class TaskComment: BaseEntity
     {
-        public int Id { get; set; }
         public string TextBody { get; set; }
         public User Author { get; set; }
         public TaskNote TaskNote { get; set; }
-        public DateTime CreateDateTime { get; set; }
+        public DateTime CreateDateTime { get; set; } = DateTime.Now;
     }
 }

@@ -37,61 +37,27 @@ namespace TaskManagerPrototype2
         {
             services.AddDbContext<TasksDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MainConnection")));
-            
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = false,
-                        ValidIssuer = "authApi",
-                        ValidateAudience = false,
-                        ValidAudience = "appApi",
-                        ValidateLifetime = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Secret"])),
-                        ValidateIssuerSigningKey = true,
-                    };
-                });
-            
-            services.AddCors();
-            services.AddControllers();
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "TaskManagerPrototype2", Version = "v1"});
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Description = "JWT Authorization header using the Bearer scheme."
-                });
- 
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference 
-                            { 
-                                Type = ReferenceType.SecurityScheme, 
-                                Id = "Bearer" 
-                            }
-                        },
-                        new string[] {}
- 
-                    }
-                });
-            });
+            services.AddJwtAuthentication(Configuration);
+
+            services.AddCors(x => x.AddPolicy("DefaultPolicy", policy => policy
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()));
             
-            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
-            services.AddScoped(typeof(IUserService), typeof(UserService));
+            // Вынесены в extension methods
+            services.AddControllers();
+            services.AddSwaggerAuthentication();
             
-            services.AddScoped(typeof(ITasksRepository), typeof(TasksRepository));
-            services.AddScoped(typeof(ITasksService), typeof(TasksService));
+            
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            
+            services.AddScoped<ITasksRepository, TasksRepository>();
+            services.AddScoped<ITasksService, TasksService>();
+
+            services.AddScoped<IDbRepository, DbRepository>();
+            services.AddScoped<ICurrentUser, CurrentUser>();
 
         }
 
@@ -109,16 +75,15 @@ namespace TaskManagerPrototype2
             
             app.UseRouting();
 
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+            app.UseCors("DefaultPolicy");
             
             app.UseAuthentication();
             app.UseAuthorization();
             
             app.UseMiddleware<JwtMiddleware>();
 
+            app.UseMiddleware<CurrentUserMiddleware>();
+            
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

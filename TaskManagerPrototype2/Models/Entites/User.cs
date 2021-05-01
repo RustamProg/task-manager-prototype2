@@ -1,9 +1,11 @@
+using System.Text.Json.Serialization;
+
 namespace TaskManagerPrototype2.Models.Entites
 {
-    public class User
+    public class User : BaseEntity
     {
-        public int Id { get; set; }
         public string Username { get; set; }
+        [JsonIgnore]
         public string Password { get; set; } 
         public Roles Role { get; set; }
     }

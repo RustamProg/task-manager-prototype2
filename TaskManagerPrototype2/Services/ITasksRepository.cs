@@ -11,11 +11,6 @@ namespace TaskManagerPrototype2.Services
         List<TaskComment> GetAllUserTaskComments(int userId);
         List<TaskNote> GetAllTasksByProject(Project project);
         List<TaskComment> GetAllTaskCommentsByTask(TaskNote taskNote);
-        Project GetProjectById(int projectId);
-        TaskNote GetTaskById(int taskNoteId);
-        TaskComment GetTaskCommentById(int taskCommentId);
-        Task AddNewProject(Project project);
-        Task AddNewTaskNote(TaskNote taskNote);
-        Task AddNewTaskComment(TaskComment taskComment);
+
     }
 }

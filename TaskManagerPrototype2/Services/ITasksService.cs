@@ -7,16 +7,16 @@ namespace TaskManagerPrototype2.Services
 {
     public interface ITasksService
     {
-        List<Project> GetAllUserProjects(int userId);
-        List<TaskNote> GetAllUserTasks(int userId);
-        List<TaskComment> GetAllUserTaskComments(int userId);
+        List<Project> GetAllUserProjects();
+        List<TaskNote> GetAllUserTasks();
+        List<TaskComment> GetAllUserTaskComments();
         List<TaskNote> GetAllTasksByProject(int projectId);
         List<TaskComment> GetAllTaskCommentsByTask(int taskNoteId);
         Project GetProjectById(int projectId);
         TaskNote GetTaskById(int taskNoteId);
         TaskComment GetTaskCommentById(int taskCommentId);
-        Task AddNewProject(ProjectForm projectForm, int userId);
-        Task AddNewTaskNote(TaskNoteForm taskNoteForm, int userId);
-        Task AddNewTaskComment(TaskCommentForm taskCommentForm, int userId);
+        Task AddNewProject(ProjectForm projectForm);
+        Task AddNewTaskNote(TaskNoteForm taskNoteForm);
+        Task AddNewTaskComment(TaskCommentForm taskCommentForm);
     }
 }
